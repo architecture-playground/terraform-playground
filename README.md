@@ -118,6 +118,17 @@ You can view these outputs again by running:
 ```shell
 $ terraform output
 ```
+In order to get URL on which the container is running use the command.
+
+```shell
+$ kubectl get services simple-example
+```
+And copy EXTERNAL-IP 
+```shell
+NAME             TYPE           CLUSTER-IP       EXTERNAL-IP                                                                 PORT(S)        AGE
+simple-example   LoadBalancer   172.20.232.195   ad5dd3169ff7d4c06ba5d8b743bf5e2a-257835526.eu-central-1.elb.amazonaws.com   80:32623/TCP   13m
+
+```
 
 ## Deploy and access Kubernetes Dashboard
 
