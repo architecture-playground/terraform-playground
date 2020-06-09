@@ -13,10 +13,6 @@ output "kubectl_config" {
   value       = module.eks.kubeconfig
 }
 
-output "lb_ip" {
-  value = kubernetes_service.simple.load_balancer_ingress[0].ip
-}
-
 # output "config_map_aws_auth" {
 #   description = "A kubernetes configuration to authenticate to this EKS cluster."
 #   value       = module.eks.config_map_aws_auth

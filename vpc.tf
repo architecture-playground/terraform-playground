@@ -31,7 +31,6 @@ module "vpc" {
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
-  map_public_ip_on_launch = true
 
   tags = {
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
@@ -46,7 +45,4 @@ module "vpc" {
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"             = "1"
   }
-}
-resource "aws_eip" "Add_ip_for_instance" {
-  vpc      = true
 }
