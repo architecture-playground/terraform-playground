@@ -1,11 +1,11 @@
 variable "region" {
-  default     = "us-east-2"
+  default     = "eu-central-1"
   description = "AWS region"
 }
 
 provider "aws" {
   version = ">= 2.28.1"
-  region  = "us-east-2"
+  region  = "eu-central-1"
 }
 
 data "aws_availability_zones" "available" {}
@@ -31,6 +31,7 @@ module "vpc" {
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
+  map_public_ip_on_launch = true
 
   tags = {
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
@@ -45,4 +46,7 @@ module "vpc" {
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"             = "1"
   }
+}
+resource "aws_eip" "Add_ip_for_instance" {
+  vpc      = true
 }
