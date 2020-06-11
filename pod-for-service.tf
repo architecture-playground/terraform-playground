@@ -1,6 +1,9 @@
-resource "kubernetes_pod" "simple-service" {
+resource "kubernetes_pod" "simple1" {
   metadata {
     name = "simple-service"
+    labels = {
+      App = "simple-1"
+    }
   }
   spec {
     container {
@@ -9,20 +12,23 @@ resource "kubernetes_pod" "simple-service" {
       port {
         container_port = 15777
       }
-
-      liveness_probe {
-        http_get {
-          path = "/actuator/health"
-          port = 15777
-
-        }
-
-        initial_delay_seconds = 30
-        period_seconds = 30
-        failure_threshold = 30
-        success_threshold = 1
-        timeout_seconds = 20
-      }
     }
+  }
+}
+
+resource "kubernetes_service" "simple" {
+  metadata {
+    name = "simple-example"
+  }
+  spec {
+    selector = {
+      App = kubernetes_pod.simple1.metadata[0].labels.App
+    }
+    port {
+      port        = 80
+      target_port = 15777
+    }
+
+    type = "LoadBalancer"
   }
 }
